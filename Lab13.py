@@ -11,16 +11,18 @@ import math, time
 from machine import PWM
 from machine import Pin
 
-from machine import Pin
 from ir_rx.nec import NEC_8 # Use the NEC 8-bit class
 from ir_rx.print_error import print_error # for debugging
 
-time.sleep(1)
+time.sleep(1) # Wait 1 second
 
 pwm_rate = 2000
+
+# Pins Controlling Motor A
 ain1_ph = Pin(12, Pin.OUT)
 ain2_en = PWM(13, freq = pwm_rate, duty_u16 = 0)
 
+# Pins Controlling Motor B
 bin1_ph = Pin(10, Pin.OUT)
 bin2_en = PWM(11, freq = pwm_rate, duty_u16 = 0)
 
@@ -28,14 +30,19 @@ pwm = min(max(int(2**17 * abs(1)), 0), 65535)
 
 # Callback function to execute when an IR code is received
 def ir_callback(data, addr, _):
+
+    # Four data values, 1-4, transmitted from IR transmitter
+
     if (data == 1):
         print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
 
+        # Motor A Moves Forward
         print("Motor A Forward")
         ain1_ph.low()
         ain2_en.duty_u16(pwm)
         time.sleep(1)
 
+        # Motor B Moves Forward
         print("Motor B Forward")
         bin1_ph.low()
         bin2_en.duty_u16(pwm)
@@ -43,12 +50,14 @@ def ir_callback(data, addr, _):
 
     elif (data == 2):
         print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
-
+        
+        # Motor A Stops
         print("Motor A Stopped")
         ain1_ph.low()
         ain2_en.duty_u16(0)
         time.sleep(1)
 
+        # Motor B Stops
         print("Motor B Stopped")
         bin1_ph.low()
         bin2_en.duty_u16(0)
@@ -57,11 +66,13 @@ def ir_callback(data, addr, _):
     elif (data == 3):
         print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
 
+        # Motor A Reverses
         print("Motor A Reverse")
         ain1_ph.high()
         ain2_en.duty_u16(pwm)
         time.sleep(1)
 
+        # Motor A Reverses
         print("Motor B Reverse")
         bin1_ph.high()
         bin2_en.duty_u16(pwm)
@@ -70,11 +81,13 @@ def ir_callback(data, addr, _):
     elif (data == 4):
         print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
 
+        # Motor A Stops
         print("Motor A Stopped")
         ain1_ph.low()
         ain2_en.duty_u16(0)
         time.sleep(1)
 
+        # Motor B Stops
         print("Motor B Stopped")
         bin1_ph.low()
         bin2_en.duty_u16(0)
