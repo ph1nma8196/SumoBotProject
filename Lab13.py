@@ -25,14 +25,26 @@ pwm = min(max(int(2**17 * abs(1)), 0), 65535)
 
 # Callback function to execute when an IR code is received
 def ir_callback(data, addr, _):
-    if (data == '01'):
+    if (data == 1):
         print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
-    elif (data == '02'):
-        print(f"Hi")
-    elif (data == '03'):
-        print(f"Cheese")
-    elif (data == '04'):
-        print(f"Something")
+
+        print("Motor B Forward")
+        ain1_ph.low()
+        ain2_en.duty_u16(pwm)
+        time.sleep(2)
+
+    elif (data == 2):
+        print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
+    elif (data == 3):
+        print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
+
+        print("Motor B Reverse")
+        ain1_ph.high()
+        ain2_en.duty_u16(pwm)
+        time.sleep(2)
+
+    elif (data == 4):
+        print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
 
 # Setup the IR receiver
 ir_pin = Pin(17, Pin.IN, Pin.PULL_UP) # Adjust the pin number based on your wiring
