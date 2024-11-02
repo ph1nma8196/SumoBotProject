@@ -109,7 +109,7 @@ def ir_callback(data, addr, _):
         # Motor B Stops
         print("Motor B Stopped")
         bin1_ph.low()
-        bin2_en.duty_u16(0)
+        bin2_en.duty_u16(0) 
 
 # Setup the IR receiver
 ir_pin = Pin(17, Pin.IN, Pin.PULL_UP) # Adjust the pin number based on your wiring
@@ -121,7 +121,6 @@ ir_receiver.error_function(print_error)
 
 # Main loop to keep the script running
 while True:
-    
     if (d3.value() == 1):
 
         # Motor A Moves Forward
@@ -135,6 +134,17 @@ while True:
         bin2_en.duty_u16(pwm)
 
         time.sleep(0.35)
+
+        if (d3.value() == 0):
+            # Motor A Stops
+            print("Motor A Stopped")
+            ain1_ph.low()
+            ain2_en.duty_u16(0)
+
+            # Motor B Stops
+            print("Motor B Stopped")
+            bin1_ph.low()
+            bin2_en.duty_u16(0)
 
     elif (d2.value() == 1):
         
@@ -150,6 +160,17 @@ while True:
 
         time.sleep(0.35)
 
+        if (d2.value() == 0):
+            # Motor A Stops
+            print("Motor A Stopped")
+            ain1_ph.low()
+            ain2_en.duty_u16(0)
+
+            # Motor B Stops
+            print("Motor B Stopped")
+            bin1_ph.low()
+            bin2_en.duty_u16(0)
+
     elif (d1.value() == 1):
 
         # Motor A Stops
@@ -163,6 +184,17 @@ while True:
         bin2_en.duty_u16(pwm)
 
         time.sleep(0.15)
+
+        if (d1.value() == 0):
+            # Motor A Stops
+            print("Motor A Stopped")
+            ain1_ph.low()
+            ain2_en.duty_u16(0)
+
+            # Motor B Stops
+            print("Motor B Stopped")
+            bin1_ph.low()
+            bin2_en.duty_u16(0)
 
     elif (d0.value() == 1):
 
@@ -178,15 +210,16 @@ while True:
 
         time.sleep(0.15)
 
+        if (d0.value() == 0):
+            # Motor A Stops
+            print("Motor A Stopped")
+            ain1_ph.low()
+            ain2_en.duty_u16(0)
+
+            # Motor B Stops
+            print("Motor B Stopped")
+            bin1_ph.low()
+            bin2_en.duty_u16(0)
+
     else:
-        # Motors Stopped
-
-        # Motor A Stops
-        print("Motor A Stopped")
-        ain1_ph.low()
-        ain2_en.duty_u16(0)
-
-        # Motor B Stops
-        print("Motor B Stopped")
-        bin1_ph.low()
-        bin2_en.duty_u16(0)
+        pass
