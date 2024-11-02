@@ -1,3 +1,11 @@
+# ECEN 2440
+# Group 12
+# Lab 15
+# 11/2/2024
+
+# Integration Test 10
+# Testing User LED with RF Receiver
+
 import time
 import machine
 
