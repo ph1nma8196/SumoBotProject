@@ -7,6 +7,7 @@ import time
 
 # Define the pin connected to the QRE1113 sensor
 Reflector_Pin = Pin(20, Pin.OUT)  # GPIO 2 on the Raspberry Pi Pico
+LED_Pin = Pin(15, Pin.OUT)
 
 def readSensor():
     # Set the pin as output and write HIGH
@@ -34,6 +35,11 @@ while True:
     
     # Print the sensor value to the console
     print(sensor_value)
+
+    if (sensor_value < 1000):
+        LED_Pin.high()
+    else:
+        LED_Pin.low()
     
     # Delay to make the output readable
     time.sleep(0.1)  # 100 ms delay
