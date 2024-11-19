@@ -35,18 +35,18 @@ current_y = 0
 def ir_callback(data, addr, _):
     print(f"Position Recieved. X: {data}, Y: {addr}")
     #time.sleep(0.3)
-    if(addr==8):
+    if(addr==8): # Here, use tank controls
         pwmPercent = 0
         print("MOTORS OFF")
-    elif(addr<8):
+    elif(addr<8): #otherwise, use smooth steering controls.
         pwmPercent = (1/(addr+1))
         ain1_ph.low()
-        bin1_ph.low()
+        bin1_ph.high()
         print("REVERSE, ", pwmPercent)
     else:
         pwmPercent = ((addr-8)/8)
         ain1_ph.high()
-        bin1_ph.high()
+        bin1_ph.low()
         print("FORWARDS, ", pwmPercent)
     if(data==8):
         ain2_en.duty_u16(int(pwm*pwmPercent))
