@@ -7,10 +7,10 @@ import time
 
 # Define the pin connected to the QRE1113 sensor
 Reflector_Pin = Pin(20, Pin.OUT)  # GPIO 2 on the Raspberry Pi Pico
-Blue = Pin(12, Pin.OUT)
-Green = Pin(13, Pin.OUT)
-Yellow = Pin(14, Pin.OUT)
-Red = Pin(15, Pin.OUT)
+Blue = Pin(15, Pin.OUT)
+Green = Pin(14, Pin.OUT)
+Yellow = Pin(13, Pin.OUT)
+Red = Pin(12, Pin.OUT)
 
 
 def readSensor():
@@ -40,15 +40,21 @@ while True:
     # Print the sensor value to the console
     print(sensor_value)
 
-    if (sensor_value < 7500 & sensor_value >= 5000):
-        Red.low()
+    if (sensor_value < 7500 and sensor_value >= 5000):
+        Blue.low()
+        Green.low()
         Yellow.high()
-    elif (sensor_value < 5000 & sensor_value >= 2500):
         Red.low()
+    elif (sensor_value < 5000 and sensor_value >= 2500):
+        Blue.low()
         Green.high()
-    elif (sensor_value < 2500):
+        Yellow.low()
         Red.low()
+    elif (sensor_value < 2500):
         Blue.high()
+        Green.low()
+        Yellow.low()
+        Red.low()
     else:
         Blue.low()
         Green.low()
