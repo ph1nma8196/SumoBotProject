@@ -7,7 +7,11 @@ import time
 
 # Define the pin connected to the QRE1113 sensor
 Reflector_Pin = Pin(20, Pin.OUT)  # GPIO 2 on the Raspberry Pi Pico
-LED_Pin = Pin(15, Pin.OUT)
+Blue = Pin(12, Pin.OUT)
+Green = Pin(13, Pin.OUT)
+Yellow = Pin(14, Pin.OUT)
+Red = Pin(15, Pin.OUT)
+
 
 def readSensor():
     # Set the pin as output and write HIGH
@@ -22,7 +26,7 @@ def readSensor():
     start_time = time.ticks_us()
     
     # Measure how long the pin stays HIGH, max 3000 us
-    while Reflector_Pin.value() == 1 and time.ticks_diff(time.ticks_us(), start_time) < 3000:
+    while Reflector_Pin.value() == 1 and time.ticks_diff(time.ticks_us(), start_time) < 10000:
         pass
     
     # Calculate the time difference
@@ -36,10 +40,20 @@ while True:
     # Print the sensor value to the console
     print(sensor_value)
 
-    if (sensor_value < 1000):
-        LED_Pin.high()
+    if (sensor_value < 7500 & sensor_value >= 5000):
+        Red.low()
+        Yellow.high()
+    elif (sensor_value < 5000 & sensor_value >= 2500):
+        Red.low()
+        Green.high()
+    elif (sensor_value < 2500):
+        Red.low()
+        Blue.high()
     else:
-        LED_Pin.low()
+        Blue.low()
+        Green.low()
+        Yellow.low()
+        Red.high()
     
     # Delay to make the output readable
     time.sleep(0.1)  # 100 ms delay
