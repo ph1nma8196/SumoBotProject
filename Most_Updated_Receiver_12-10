@@ -23,7 +23,7 @@ Reflector_Pin_Left = Pin(16, Pin.OUT)  # GPIO 16 on the Raspberry Pi Pico
 Reflector_Pin_Right = Pin(17, Pin.OUT) # GPIO 17
 
 FORWARD_THRESHOLD_LOW = 5000
-FORWARD_THRESHOLD_HIGH = 11000
+FORWARD_THRESHOLD_HIGH = 9500
 
 sensor_check = 0
 
