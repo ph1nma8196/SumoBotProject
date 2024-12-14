@@ -1,7 +1,7 @@
 # ECEN 2440
 # Group 12
 # Final Project
-# 12/10/24
+# 12/14/24
     
 import ir_rx
 
@@ -67,12 +67,12 @@ def ir_callback(data, addr, _):
         bin2_en.duty_u16(int(pwm*pwmPercent))
         print("STRAIGHT")
     elif(data<8):
-        ain2_en.duty_u16(int(pwm*(1/pwmPercent)))
+        ain2_en.duty_u16(int(pwm*(1/(pwmPercent+1))))
         bin2_en.duty_u16(int(pwm*(pwmPercent))) #ON
         print("MOTOR A FORWARDS MOTOR B ADJUSTED")
     else:
         ain2_en.duty_u16(int(pwm*(pwmPercent))) #ON
-        bin2_en.duty_u16(int(pwm*(1/pwmPercent)))
+        bin2_en.duty_u16(int(pwm*(1/(pwmPercent+1))))
         print("MOTOR B FORWARDS MOTOR A ADJUSTED")
 
 def readSensor(Reflector_Pin):
